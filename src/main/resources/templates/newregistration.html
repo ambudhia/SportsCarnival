@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>SCW Sports Carnival 2024 Registration</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/templatemo_style.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'
+	rel='stylesheet' type='text/css'>
+<!-- 
+        Composite Template 
+        http://www.templatemo.com/preview/templatemo_444_composite
+        -->
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse">
+
+	<!-- start templatemo navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon icon-bar"></span> <span class="icon icon-bar"></span>
+					<span class="icon icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">SCW Sports Carnival 2024</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/scw" class="smoothScroll">HOME</a></li>
+					<li><a href="addregistration#features" class="smoothScroll">Registration</a></li>
+					<li><a href="#about" class="smoothScroll">Live Games</a></li>
+					<li><a href="viewregistration#features" class="smoothScroll">View
+							Registration</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- end templatemo navigation -->
+	<section id="home" class="text-center">
+		<div class="templatemo_headerimage">
+			<div class="flexslider">
+				<ul class="slides">
+					<li><img src="images/slider/7.jpg" alt="Slide 1">
+						<div class="slider-caption">
+							<div class="templatemo_homewrapper"></div>
+						</div></li>
+					<li><img src="images/slider/2.jpeg" alt="Slide 2">
+						<div class="slider-caption">
+							<div class="templatemo_homewrapper"></div>
+						</div></li>
+
+					<li><img src="images/slider/6.jpg" alt="Slide 3">
+						<div class="slider-caption">
+							<div class="templatemo_homewrapper"></div>
+						</div></li>
+					<li><img src="images/slider/4.jpg" alt="Slide 4">
+						<div class="slider-caption">
+							<div class="templatemo_homewrapper"></div>
+						</div></li>
+
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!-- start templatemo features -->
+	<section id="features" class="features text-center">
+		<div class="formbold-main-wrapper">
+			<!-- Author: FormBold Team -->
+			<!-- Learn More: https://formbold.com -->
+			<div class="formbold-form-wrapper">
+				<form action="#" th:action="@{/saveregistration}"
+					th:object="${registrationDetails}" method="POST"
+					enctype="multipart/form-data">
+
+					<div class="alert alert-warning">
+						<div>
+							<p>Please fill the registration form. Please note that you
+								must provide the same phone number that is linked to your UPI.
+								Once you find the amount which is displayed afters selecting
+								games in amount filed, use the QR code to do the payment. Enter
+								the Transaction ID or attach the screen shot in order to
+								complete the registration successfully.</p>
+						</div>
+					</div>
+
+					<div class="alert alert-danger"
+						th:if="${serviceErrorMessage != null}"
+						th:text="${serviceErrorMessage}"></div>
+
+					<div class="formbold-input-flex">
+						<div>
+							<input type="text" name="name" id="name" th:field="*{name}"
+								class="formbold-form-input" /> <label for="firstname"
+								class="formbold-form-label"> Name * </label>
+						</div>
+						<div class="alert alert-danger"
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+						<div>
+							<input type="text" name="aptno" id="aptno" th:field="*{aptNo}"
+								class="formbold-form-input" /> <label for="lastname"
+								class="formbold-form-label"> Apt/Villa Unit* </label>
+						</div>
+						<div class="alert alert-danger"
+							th:if="${#fields.hasErrors('aptNo')}" th:errors="*{aptNo}"></div>
+					</div>
+
+					<div class="formbold-input-flex">
+						<div>
+							<input type="email" name="email" id="email" th:field="*{email}"
+								class="formbold-form-input" /> <label for="email"
+								class="formbold-form-label"> email* </label>
+						</div>
+						<div class="alert alert-danger"
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+						<div>
+							<input type="text" name="phone" id="phone"
+								th:field="*{phoneNumber}" class="formbold-form-input" /> <label
+								for="phone" class="formbold-form-label-red"> Phone (must
+								be same as UPI)* </label>
+						</div>
+						<div class="alert alert-danger"
+							th:if="${#fields.hasErrors('phoneNumber')}"
+							th:errors="*{phoneNumber}"></div>
+					</div>
+
+
+					<div class="">
+						<label for="message" class="formbold-form-label">Games </label>
+
+						<div class="formbold-form-label-green">
+							Amount*(<span id="amountid">0</span>)
+						</div>
+
+
+						<div th:each="sports : ${allsports}"
+							class="formbold-input-checkbox-flex">
+							<input type="checkbox" name="sports"
+								class="formbold-form-input-checkbox"
+								th:text="${sports.description}" th:value="${sports.id}"
+								th:field="*{registeredSports}"
+								onclick='handleChecboxClick(this);' />
+						</div>
+						<div class="alert alert-danger"
+							th:if="${#fields.hasErrors('registeredSports')}"
+							th:errors="*{registeredSports}"></div>
+
+					</div>
+
+
+					<img src="images/VishalQR.jpg" class="img-responsive" alt="work">
+
+
+
+
+
+					<div class="formbold-form-label-green">
+						<label for="upload" class="formbold-input-label" cl>Before
+							submitting please enter your transaction id or upload a screen
+							shot of the same.</label>
+
+
+						<div class="formbold-input-flex">
+							<div>
+								<input type="text" name="txnid" id="txnid" th:field="*{txnid}"
+									class="formbold-form-input" /> <label for="txnid"
+									class="formbold-form-label"> Transaction ID </label>
+							</div>
+
+							<div>
+								<input type="file" name="upload" id="upload"
+									th:field="*{transactionfile}">
+							</div>
+						</div>
+
+					</div>
+
+					<button type="submit" class="formbold-btn">Register</button>
+				</form>
+			</div>
+		</div>
+		<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap')
+	;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Inter", sans-serif;
+}
+
+.formbold-main-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 48px;
+}
+
+.formbold-form-wrapper {
+	margin: 0 auto;
+	max-width: 550px;
+	width: 100%;
+	background: white;
+}
+
+.formbold-input-flex {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 22px;
+}
+
+.formbold-input-checkbox-flex {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 22px;
+	margin-left: 10px;
+}
+
+.formbold-input-flex>div {
+	width: 50%;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.formbold-textarea {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.formbold-form-input {
+	width: 100%;
+	padding-bottom: 10px;
+	border: none;
+	border-bottom: 1px solid #DDE3EC;
+	background: #FFFFFF;
+	font-weight: 500;
+	font-size: 16px;
+	color: #07074D;
+	outline: none;
+	resize: none;
+}
+
+.checkbox-container {
+	display: inline-block;
+}
+
+.checkbox-container input[type="checkbox"], .checkbox-container label {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.formbold-form-input::placeholder {
+	color: #536387;
+}
+
+.formbold-form-input:focus {
+	border-color: #6A64F1;
+}
+
+.formbold-form-label {
+	color: #07074D;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 24px;
+	display: block;
+	margin-bottom: 18px;
+}
+
+.formbold-form-label-green {
+	color: green;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 24px;
+	display: block;
+	margin-bottom: 18px;
+}
+
+.formbold-form-label-red {
+	color: red;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 24px;
+	display: block;
+	margin-bottom: 18px;
+}
+
+.formbold-form-input:focus+.formbold-form-label {
+	color: #6A64F1;
+}
+
+.formbold-input-file {
+	margin-top: 30px;
+}
+
+.formbold-input-file input[type="file"] {
+	position: absolute;
+	top: 6px;
+	left: 0;
+	z-index: -1;
+}
+
+.formbold-input-file .formbold-input-label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	position: relative;
+}
+
+.formbold-filename-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 22px;
+}
+
+.formbold-filename {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 14px;
+	line-height: 24px;
+	color: #536387;
+}
+
+.formbold-filename svg {
+	cursor: pointer;
+}
+
+.formbold-btn {
+	font-size: 16px;
+	border-radius: 5px;
+	padding: 12px 25px;
+	border: none;
+	font-weight: 500;
+	background-color: #6A64F1;
+	color: white;
+	cursor: pointer;
+	margin-top: 25px;
+}
+
+.formbold-btn:hover {
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+</style>
+	</section>
+	<!-- end templatemo features -->
+
+
+
+
+
+
+	<!-- start templatemo footer -->
+	<footer class="text-center">
+		<div class="container">
+			<div class="row">
+				<div class="social_icon">
+					<a href="#" class="fa fa-facebook"></a> <a href="#"
+						class="fa fa-twitter"></a> <a href="#" class="fa fa-linkedin"></a>
+					<a href="#" class="fa fa-tumblr"></a>
+				</div>
+				<p>Copyright © 2084 Your Company Name</p>
+			</div>
+		</div>
+	</footer>
+	<!-- end templatemo footer -->
+
+	<!-- start back to top -->
+	<a href="#top" class="go-top"><i class="fa fa-chevron-up fa-1x"></i></a>
+	<!-- end back to top -->
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/smoothscroll.js"></script>
+	<script src="js/jquery.flexslider.js"></script>
+
+	<!-- start templatemo back to top js -->
+	<script>
+		var amountMap = {
+			registeredSports1 : "250",
+			registeredSports2 : "200",
+			registeredSports3 : "200",
+			registeredSports4 : "100",
+			registeredSports5 : "100",
+			registeredSports6 : "350",
+			registeredSports7 : "300",
+			registeredSports8 : "350",
+			registeredSports9 : "300",
+			registeredSports10 : "300",
+			registeredSports11 : "500",
+			registeredSports12 : "200",
+			registeredSports13 : "75",
+			registeredSports14 : "75",
+			registeredSports15 : "150"
+			
+		};
+
+		$(document).ready(function() {
+			// FlexSlider 
+			$('.flexslider').flexslider({
+				animation : "fade",
+				directionNav : false
+			});
+
+			// Show or hide the sticky footer button
+			$(window).scroll(function() {
+				if ($(this).scrollTop() > 200) {
+					$('.go-top').fadeIn(200);
+				} else {
+					$('.go-top').fadeOut(200);
+				}
+			});
+			// Animate the scroll to top
+			$('.go-top').click(function(event) {
+				event.preventDefault();
+				$('html, body').animate({
+					scrollTop : 0
+				}, 300);
+			})
+		});
+
+		function handleChecboxClick(cb) {
+			var checkBoxId = cb.id;
+			var checkBoxIdChecked = cb.checked;
+			var currentAmount = document.getElementById('amountid').innerText;
+			var currentAmountNumber = Number(currentAmount);
+
+			// Get the amoount associated with the games..
+			if (checkBoxIdChecked) {
+				var checkedGameAmount = amountMap[checkBoxId];
+				var checkedGameAmountNumber = Number(checkedGameAmount);
+
+				currentAmountNumber = currentAmountNumber
+						+ checkedGameAmountNumber;
+			} else {
+				var checkedGameAmount = amountMap[checkBoxId];
+				var checkedGameAmountNumber = Number(checkedGameAmount);
+				currentAmountNumber = currentAmountNumber
+						- checkedGameAmountNumber;
+			}
+			document.getElementById("amountid").textContent = currentAmountNumber;
+
+		}
+	</script>
+	<!-- end templatemo back to top js -->
+
+</body>
+</html>
